@@ -57,5 +57,25 @@ public class ImageProcessing {
         frame.setVisible(true);
 
     }
+    public static BufferedImage pixalate2(BufferedImage img, int n){
+        BufferedImage pixImg = new BufferedImage(img.getWidth(),img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        int pix = 0, p = 0;
+        for(int y = 0; y<img.getHeight()-2; y+=2 ){
+            for(int x = 0; x<img.getWidth(); x+=2){
+                pix = (int)((img.getRGB(x, y)& 0xFF)+
+                (img.getRGB(x+1, y)& 0xFF)+ 
+                (img.getRGB(x, y+1)& 0XFF)+
+                (img.getRGB(x+1, y+1)& 0xFF))/4;
+                p = (255<<24) | (pix<<16) | (pix<<8) | pix;
+                pixImg.setRGB(x,y,p);
+                pixImg.setRGB(x+1,y,p);
+                pixImg.setRGB(x,y+1,p);
+                pixImg.setRGB(x+1,y+1,p);
+
+            }
+        }
+        return pixImg;
+
+    }
     
 }
